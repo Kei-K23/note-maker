@@ -11,6 +11,12 @@ function createWindow(): void {
     show: false,
     center: true,
     autoHideMenuBar: true,
+    title: 'NoteMaker',
+    frame: false,
+    vibrancy: 'under-window',
+    visualEffectState: 'active',
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 15, y: 10 },
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
