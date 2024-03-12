@@ -1,7 +1,9 @@
 import { cn } from '@renderer/utils/cn'
 import React, { ComponentProps } from 'react'
 
-export const ActionButton = ({ className, children, ...props }: ComponentProps<'button'>) => {
+export type ActionButtonProps = ComponentProps<'button'>
+
+export const ActionButton = ({ className, children, ...props }: ActionButtonProps) => {
   return (
     <button
       className={cn(
