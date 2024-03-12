@@ -24,6 +24,7 @@ export default defineConfig({
         '@/hooks': resolve('src/renderer/src/hooks'),
         '@/utils': resolve('src/renderer/src/utils'),
         '@/assets': resolve('src/renderer/src/assets'),
+        '@/mock': resolve('src/renderer/src/store/mock'),
         '@/store': resolve('src/renderer/src/store'),
         '@components': resolve('src/renderer/src/components')
       }
