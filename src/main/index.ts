@@ -2,8 +2,8 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { getNotesFiles } from './lib'
-import { GetNotesFiles } from '@shared/type'
+import { getNotesFiles, readNoteFile } from './lib'
+import { GetNotesFiles, ReadNoteFile } from '@shared/type'
 
 function createWindow(): void {
   // Create the browser window.
@@ -60,6 +60,8 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('getNotesFiles', (_, ...args: Parameters<GetNotesFiles>) => getNotesFiles(...args))
+
+  ipcMain.handle('readNoteFile', (_, ...args: Parameters<ReadNoteFile>) => readNoteFile(...args))
 
   createWindow()
 

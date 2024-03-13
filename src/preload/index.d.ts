@@ -1,10 +1,11 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
-import { GetNotesFiles } from '@shared/type'
+import { GetNotesFiles, ReadNoteFile } from '@shared/type'
 
 declare global {
   interface Window {
     context: {
       getNotesFiles: GetNotesFiles
+      readNoteFile: ReadNoteFile
     }
   }
 }
