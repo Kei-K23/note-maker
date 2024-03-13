@@ -1,8 +1,10 @@
 import { APPDIRName, FILE_ENCODING } from '@shared/constant'
 import { NoteInfo } from '@shared/models'
-import { GetNotesFiles, ReadNoteFile, WriteNoteFile } from '@shared/type'
+import { CreateNewNoteFile, GetNotesFiles, ReadNoteFile, WriteNoteFile } from '@shared/type'
+import { dialog } from 'electron'
 import { ensureDir, readFileSync, readdir, stat, writeFile } from 'fs-extra'
 import { homedir } from 'os'
+import path from 'path'
 
 export const getRootDir = () => {
   return `${homedir()}/${APPDIRName}`
@@ -41,4 +43,41 @@ export const readNoteFile: ReadNoteFile = async (filename) => {
 export const writeNoteFile: WriteNoteFile = async (filename, content) => {
   console.log('Write note: ', filename)
   return writeFile(`${getRootDir()}/${filename}.md`, content, { encoding: FILE_ENCODING })
+}
+
+export const createNewNoteFile: CreateNewNoteFile = async () => {
+  const root = getRootDir()
+
+  await ensureDir(root)
+
+  const filePath = dialog.showSaveDialogSync({
+    title: 'Create New Note',
+    defaultPath: `${root}/Untitled.md`,
+    buttonLabel: 'Create',
+    showsTagField: false,
+    properties: ['showOverwriteConfirmation'],
+    filters: [
+      {
+        name: 'Markdown',
+        extensions: ['md']
+      }
+    ]
+  })
+
+  if (!filePath) return false
+
+  const { name: filename, dir: parentDir } = path.parse(filePath)
+
+  if (parentDir !== root) {
+    await dialog.showMessageBox({
+      type: 'error',
+      title: 'Note creation filed',
+      message: `Cannot create note outside of the ${root} directory`
+    })
+    return false
+  }
+
+  await writeNoteFile(filename, '')
+
+  return filename
 }
