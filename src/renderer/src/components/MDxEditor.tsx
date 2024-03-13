@@ -1,5 +1,6 @@
 import {
   MDXEditor,
+  MDXEditorMethods,
   codeBlockPlugin,
   headingsPlugin,
   listsPlugin,
@@ -7,17 +8,49 @@ import {
   quotePlugin
 } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
-import { selectedNote } from '@renderer/store'
-import { useAtomValue } from 'jotai'
+import { saveNote, selectedNote } from '@renderer/store'
+import { NoteContent } from '@shared/models'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { throttle } from 'lodash'
+import { useRef } from 'react'
 
 export const MDxEditor = () => {
   const note = useAtomValue(selectedNote)
+  const writeNote = useSetAtom(saveNote)
+  const editorRef = useRef<MDXEditorMethods>(null)
+
+  const handleAutoSave = throttle(
+    async (content: NoteContent) => {
+      if (!note) return
+
+      await writeNote(content)
+    },
+    3000,
+    {
+      leading: false,
+      trailing: true
+    }
+  )
+
+  const handelSave = async () => {
+    if (!note) return
+    handleAutoSave.cancel()
+
+    const content = editorRef.current?.getMarkdown()
+
+    if (!content) return
+
+    await writeNote(content)
+  }
 
   if (!note) return null
 
   return (
     <MDXEditor
+      ref={editorRef}
       key={note.title}
+      onBlur={handelSave}
+      onChange={handleAutoSave}
       markdown={note.content}
       plugins={[
         headingsPlugin(),

@@ -1,7 +1,6 @@
 import { atom } from 'jotai'
 import { unwrap } from 'jotai/utils'
-import { noteMockData } from './mock'
-import { NoteInfo } from '@shared/models'
+import { NoteContent, NoteInfo } from '@shared/models'
 
 const loadNotesFiles = async () => {
   const notes = await window.context.getNotesFiles()
@@ -68,4 +67,26 @@ export const deleteNote = atom(null, (get, set) => {
   )
 
   set(selectedNoteIndexAtom, null)
+})
+
+export const saveNote = atom(null, async (get, set, newContent: NoteContent) => {
+  const notes = get(notesAtom)
+  const selectedNoteValue = get(selectedNote)
+
+  if (selectedNoteValue === null || !notes) return null
+
+  await window.context.writeNoteFile(selectedNoteValue.title, newContent)
+
+  set(
+    notesAtom,
+    notes.map((note) =>
+      note.title === selectedNoteValue.title
+        ? {
+            ...note,
+            content: newContent,
+            lastEdited: new Date().getTime()
+          }
+        : note
+    )
+  )
 })

@@ -1,4 +1,4 @@
-const dateFormat = new Intl.DateTimeFormat('en-US', {
+const dateFormat = new Intl.DateTimeFormat(window.context.locale, {
   dateStyle: 'short',
   timeStyle: 'short',
   timeZone: 'UTC'
