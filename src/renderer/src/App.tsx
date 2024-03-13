@@ -9,6 +9,7 @@ import {
   MDxEditor,
   FloatingNoteTitle
 } from './components'
+import { ToastContainer } from 'react-toastify'
 
 function App(): JSX.Element {
   const noteListRef = useRef<HTMLLIElement | null>(null)
@@ -30,6 +31,7 @@ function App(): JSX.Element {
           <MDxEditor />
         </Content>
       </Root>
+      <ToastContainer />
     </>
   )
 }

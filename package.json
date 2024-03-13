@@ -26,7 +26,8 @@
     "@mdxeditor/editor": "^2.13.1",
     "fs-extra": "^11.2.0",
     "jotai": "^2.7.0",
-    "lucide-react": "^0.356.0"
+    "lucide-react": "^0.356.0",
+    "react-toastify": "^10.0.4"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",

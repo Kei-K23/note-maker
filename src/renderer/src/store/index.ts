@@ -44,11 +44,11 @@ export const selectedNote = unwrap(
 export const createNewNote = atom(null, async (get, set) => {
   const notes = get(notesAtom)
 
-  if (!notes) return null
+  if (!notes) return false
 
   const title = await window.context.createNewNoteFile()
 
-  if (!title) return null
+  if (!title) return false
 
   const newNote: NoteInfo = {
     title,
@@ -58,23 +58,25 @@ export const createNewNote = atom(null, async (get, set) => {
   set(notesAtom, [newNote, ...notes.filter((note) => note.title !== newNote.title)])
 
   set(selectedNoteIndexAtom, 0)
+  return true
 })
 
 export const deleteNote = atom(null, async (get, set) => {
   const notes = get(notesAtom)
   const selectedNoteValue = get(selectedNote)
 
-  if (selectedNoteValue === null || !notes) return null
+  if (selectedNoteValue === null || !notes) return false
 
   const isDeleted = await window.context.deleteNoteFile(selectedNoteValue.title)
 
-  if (!isDeleted) return null
+  if (!isDeleted) return false
 
   set(
     notesAtom,
     notes.filter((note) => note.title !== selectedNoteValue.title)
   )
   set(selectedNoteIndexAtom, null)
+  return true
 })
 
 export const saveNote = atom(null, async (get, set, newContent: NoteContent) => {

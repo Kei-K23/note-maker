@@ -1,6 +1,7 @@
 import { updateNote } from '@renderer/store'
 import { useSetAtom } from 'jotai'
 import { ComponentProps, FormEvent, useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 
 type UpdatePreviewProps = ComponentProps<'li'> & {
   title: string
@@ -19,10 +20,14 @@ export const UpdatePreview = ({ title, setIsEdited, ...props }: UpdatePreviewPro
     const isUpdated = await updateNoteFilename(titleV)
 
     if (!isUpdated) {
-      // TODO: Notifications
+      toast.error('Something went wrong', {
+        position: 'bottom-right'
+      })
       return
     }
-    // TODO: Notifications
+    toast.success('Note updated successfully', {
+      position: 'bottom-right'
+    })
   }
 
   const onBlur = () => {
