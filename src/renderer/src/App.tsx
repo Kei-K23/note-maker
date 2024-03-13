@@ -4,7 +4,9 @@ import {
   Sidebar,
   DraggableTopBar,
   ActionButtonsRow,
-  NotePreviewList
+  NotePreviewList,
+  MDxEditor,
+  FloatingNoteTitle
 } from './components'
 
 function App(): JSX.Element {
@@ -16,7 +18,10 @@ function App(): JSX.Element {
           <ActionButtonsRow className="flex items-center justify-between mt-1" />
           <NotePreviewList className="mt-4" />
         </Sidebar>
-        <Content className="border-l bg-zinc-800/50 border-l-white/10">Content</Content>
+        <Content className="border-l bg-zinc-800/50 border-l-white/10">
+          <FloatingNoteTitle className="mt-3" />
+          <MDxEditor />
+        </Content>
       </Root>
     </>
   )
