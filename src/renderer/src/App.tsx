@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   Content,
   Root,
@@ -10,13 +11,19 @@ import {
 } from './components'
 
 function App(): JSX.Element {
+  const noteListRef = useRef<HTMLLIElement | null>(null)
+
+  const resetScroll = () => {
+    noteListRef?.current?.scrollTo(0, 0)
+  }
+
   return (
     <>
       <DraggableTopBar />
       <Root>
-        <Sidebar className="p-3">
-          <ActionButtonsRow className="flex items-center justify-between mt-1" />
-          <NotePreviewList className="mt-4" />
+        <Sidebar className="p-3 ">
+          <ActionButtonsRow className="z-10 flex items-center justify-between " />
+          <NotePreviewList className="mt-4 " resetScroll={resetScroll} />
         </Sidebar>
         <Content className="border-l bg-zinc-800/50 border-l-white/10">
           <FloatingNoteTitle className="mt-3" />
