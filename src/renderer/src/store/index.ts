@@ -83,7 +83,7 @@ export const saveNote = atom(null, async (get, set, newContent: NoteContent) => 
   const notes = get(notesAtom)
   const selectedNoteValue = get(selectedNote)
 
-  if (selectedNoteValue === null || !notes) return null
+  if (selectedNoteValue === null || !notes) return
 
   await window.context.writeNoteFile(selectedNoteValue.title, newContent)
 
