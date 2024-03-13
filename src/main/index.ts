@@ -1,7 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+import icon from '../../resources/duck.png?asset'
 import {
   createNewNoteFile,
   deleteNoteFile,
@@ -29,6 +29,7 @@ function createWindow(): void {
     autoHideMenuBar: true,
     title: 'NoteMaker',
     frame: false,
+    icon,
     vibrancy: 'under-window',
     visualEffectState: 'active',
     titleBarStyle: 'hidden',

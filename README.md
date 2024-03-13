@@ -1,6 +1,6 @@
 # note-maker
 
-An Electron application with React and TypeScript
+A Markdown note taken application with React and TypeScript
 
 ## Recommended IDE Setup
 
