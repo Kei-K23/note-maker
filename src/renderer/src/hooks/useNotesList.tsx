@@ -1,13 +1,13 @@
 import { notesAtom, selectedNoteIndexAtom } from '@renderer/store'
 import { useAtom, useAtomValue } from 'jotai'
-import { NoteInfo } from 'src/renderer/shared/models'
+import { NoteInfo } from '@shared/models'
 
 export const useNotesList = ({
   onSelect
 }: {
   onSelect?: () => void
 }): {
-  notes: NoteInfo[]
+  notes: NoteInfo[] | undefined
   selectedNoteIndex: number | null
   handleSelection: (index: number) => void
 } => {
