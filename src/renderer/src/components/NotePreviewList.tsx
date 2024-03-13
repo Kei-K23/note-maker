@@ -1,7 +1,7 @@
 import { NotePreview } from './NotePreview'
 import { ComponentProps } from 'react'
 import { cn } from '@renderer/utils/cn'
-import { useNotesList } from '@renderer/hooks/useNotesList'
+import { useNotesList } from '@renderer/hooks'
 
 type NotePreviewListProps = ComponentProps<'ul'> & { resetScroll: () => void }
 
