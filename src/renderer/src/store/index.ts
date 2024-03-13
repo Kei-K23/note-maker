@@ -59,11 +59,15 @@ export const createNewNote = atom(null, async (get, set) => {
   set(selectedNoteIndexAtom, 0)
 })
 
-export const deleteNote = atom(null, (get, set) => {
+export const deleteNote = atom(null, async (get, set) => {
   const notes = get(notesAtom)
   const selectedNoteValue = get(selectedNote)
 
   if (selectedNoteValue === null || !notes) return null
+
+  const isDeleted = await window.context.deleteNoteFile(selectedNoteValue.title)
+
+  if (!isDeleted) return null
 
   set(
     notesAtom,

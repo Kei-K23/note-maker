@@ -8,7 +8,7 @@ export const DeleteNoteButton = ({ ...props }: ActionButtonProps) => {
   const onDeleteClick = useSetAtom(deleteNote)
 
   return (
-    <ActionButton {...props} onClick={onDeleteClick}>
+    <ActionButton {...props} onClick={async () => await onDeleteClick()}>
       <Trash2Icon className="w-4 h-4 text-zinc-300" />
     </ActionButton>
   )

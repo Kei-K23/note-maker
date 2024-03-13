@@ -1,8 +1,14 @@
 import { APPDIRName, FILE_ENCODING } from '@shared/constant'
 import { NoteInfo } from '@shared/models'
-import { CreateNewNoteFile, GetNotesFiles, ReadNoteFile, WriteNoteFile } from '@shared/type'
+import {
+  CreateNewNoteFile,
+  DeleteNoteFile,
+  GetNotesFiles,
+  ReadNoteFile,
+  WriteNoteFile
+} from '@shared/type'
 import { dialog } from 'electron'
-import { ensureDir, readFileSync, readdir, stat, writeFile } from 'fs-extra'
+import { ensureDir, readFileSync, readdir, remove, stat, writeFile } from 'fs-extra'
 import { homedir } from 'os'
 import path from 'path'
 
@@ -80,4 +86,20 @@ export const createNewNoteFile: CreateNewNoteFile = async () => {
   await writeNoteFile(filename, '')
 
   return filename
+}
+
+export const deleteNoteFile: DeleteNoteFile = async (filename) => {
+  const { response } = await dialog.showMessageBox({
+    type: 'warning',
+    title: 'Delete Note',
+    message: `Are you sure you want to delete the note "${filename}"?`,
+    buttons: ['Delete', 'Cancel'],
+    defaultId: 1,
+    cancelId: 1
+  })
+
+  if (response === 1) return false
+
+  await remove(`${getRootDir()}/${filename}.md`)
+  return true
 }
