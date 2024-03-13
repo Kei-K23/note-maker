@@ -4,6 +4,7 @@ import {
   DeleteNoteFile,
   GetNotesFiles,
   ReadNoteFile,
+  UpdateNoteFilename,
   WriteNoteFile
 } from '@shared/type'
 
@@ -16,6 +17,7 @@ declare global {
       writeNoteFile: WriteNoteFile
       createNewNoteFile: CreateNewNoteFile
       deleteNoteFile: DeleteNoteFile
+      updateNoteFilename: UpdateNoteFilename
     }
   }
 }

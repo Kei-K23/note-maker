@@ -3,18 +3,29 @@ import { dateFormatter } from '@renderer/utils/dateFormatter'
 import { ComponentProps } from 'react'
 import { NoteInfo } from '@shared/models'
 
+import { UpdatePreview } from './UpdatePreview'
+
 export type NotePreviewProps = NoteInfo & {
   isActive?: boolean
+  isEdited?: string | null
+  setIsEdited: React.Dispatch<React.SetStateAction<string | null>>
 } & ComponentProps<'li'>
 
 export const NotePreview = ({
   className,
   title,
   lastEdited,
+  isEdited,
+  setIsEdited,
   isActive = false,
   ...props
 }: NotePreviewProps) => {
   const date = dateFormatter(lastEdited)
+
+  if (isEdited === title) {
+    return <UpdatePreview title={title} setIsEdited={setIsEdited} />
+  }
+
   return (
     <li
       className={cn(

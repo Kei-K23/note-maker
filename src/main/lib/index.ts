@@ -5,10 +5,11 @@ import {
   DeleteNoteFile,
   GetNotesFiles,
   ReadNoteFile,
+  UpdateNoteFilename,
   WriteNoteFile
 } from '@shared/type'
 import { dialog } from 'electron'
-import { ensureDir, readFileSync, readdir, remove, stat, writeFile } from 'fs-extra'
+import { ensureDir, readFileSync, readdir, remove, rename, stat, writeFile } from 'fs-extra'
 import { homedir } from 'os'
 import path from 'path'
 
@@ -101,5 +102,13 @@ export const deleteNoteFile: DeleteNoteFile = async (filename) => {
   if (response === 1) return false
 
   await remove(`${getRootDir()}/${filename}.md`)
+  return true
+}
+
+export const updateNoteFilename: UpdateNoteFilename = async (
+  oldFilename: string,
+  newFilename: string
+) => {
+  await rename(`${getRootDir()}/${oldFilename}.md`, `${getRootDir()}/${newFilename}.md`)
   return true
 }

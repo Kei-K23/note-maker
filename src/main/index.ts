@@ -7,6 +7,7 @@ import {
   deleteNoteFile,
   getNotesFiles,
   readNoteFile,
+  updateNoteFilename,
   writeNoteFile
 } from './lib'
 import {
@@ -14,6 +15,7 @@ import {
   DeleteNoteFile,
   GetNotesFiles,
   ReadNoteFile,
+  UpdateNoteFilename,
   WriteNoteFile
 } from '@shared/type'
 
@@ -83,6 +85,10 @@ app.whenReady().then(() => {
 
   ipcMain.handle('deleteNoteFile', (_, ...args: Parameters<DeleteNoteFile>) =>
     deleteNoteFile(...args)
+  )
+
+  ipcMain.handle('updateNoteFilename', (_, ...args: Parameters<UpdateNoteFilename>) =>
+    updateNoteFilename(...args)
   )
 
   createWindow()

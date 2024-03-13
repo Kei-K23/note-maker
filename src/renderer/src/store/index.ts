@@ -9,6 +9,7 @@ const loadNotesFiles = async () => {
 }
 
 const notesAtomAsync = atom<NoteInfo[] | Promise<NoteInfo[]>>(loadNotesFiles())
+export const editNoteAtom = atom<NoteInfo['title']>('')
 
 export const notesAtom = unwrap(notesAtomAsync, (prev) => prev)
 
@@ -73,7 +74,6 @@ export const deleteNote = atom(null, async (get, set) => {
     notesAtom,
     notes.filter((note) => note.title !== selectedNoteValue.title)
   )
-
   set(selectedNoteIndexAtom, null)
 })
 
@@ -97,4 +97,29 @@ export const saveNote = atom(null, async (get, set, newContent: NoteContent) => 
         : note
     )
   )
+})
+
+export const updateNote = atom(null, async (get, set, newFilename: string) => {
+  const notes = get(notesAtom)
+  const selectedNoteValue = get(selectedNote)
+
+  if (selectedNoteValue === null || !notes) return null
+
+  const isUpdated = await window.context.updateNoteFilename(selectedNoteValue.title, newFilename)
+
+  if (!isUpdated) return null
+
+  set(
+    notesAtom,
+    notes.map((note) =>
+      note.title === selectedNoteValue.title
+        ? {
+            ...note,
+            title: newFilename,
+            lastEdited: new Date().getTime()
+          }
+        : note
+    )
+  )
+  return isUpdated
 })

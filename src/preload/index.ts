@@ -3,6 +3,7 @@ import {
   DeleteNoteFile,
   GetNotesFiles,
   ReadNoteFile,
+  UpdateNoteFilename,
   WriteNoteFile
 } from '@shared/type'
 import { contextBridge, ipcRenderer } from 'electron'
@@ -23,7 +24,9 @@ try {
     createNewNoteFile: (...args: Parameters<CreateNewNoteFile>) =>
       ipcRenderer.invoke('createNewNoteFile', ...args),
     deleteNoteFile: (...args: Parameters<DeleteNoteFile>) =>
-      ipcRenderer.invoke('deleteNoteFile', ...args)
+      ipcRenderer.invoke('deleteNoteFile', ...args),
+    updateNoteFilename: (...args: Parameters<UpdateNoteFilename>) =>
+      ipcRenderer.invoke('updateNoteFilename', ...args)
   })
 } catch (e) {
   console.error(e)

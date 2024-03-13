@@ -43,7 +43,27 @@ export const MDxEditor = () => {
     await writeNote(content)
   }
 
-  if (!note) return null
+  if (!note) {
+    return (
+      <div className="flex items-center justify-center h-screen px-8 py-5 text-zinc-500 max-w-none">
+        <div className="space-y-3 text-center">
+          <h2>To write down your awesome ideas</h2>
+          <h3>Create new note by clicking &quot;Pen&quot; icon or select existing</h3>
+          <p className="absolute text-sm bottom-4 left-[50%] translate-y-[-50%]">
+            Made with 💙 by{' '}
+            <a
+              className="text-sky-500"
+              rel="noreferrer"
+              href="https://github.com/Kei-K23"
+              target="_blank"
+            >
+              Kei-K23
+            </a>
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <MDXEditor
